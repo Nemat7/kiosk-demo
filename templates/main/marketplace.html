@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Маркетплейс - Киоск{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketplace.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Секция маркетплейса -->
+        <section class="marketplace-section">
+            <h2 class="marketplace-section-title">Агропромышленный Маркетплейс</h2>
+
+            <!-- Фильтры -->
+            <div class="marketplace-filters-container">
+                <h3 class="marketplace-filters-title">
+                    <i class="fas fa-filter"></i> Фильтры поиска
+                </h3>
+
+                <form method="get" action="{% url 'marketplace' %}" id="marketplace-filters-form">
+                    <div class="marketplace-filters-grid">
+                        <div class="marketplace-filter-group">
+                            <label class="marketplace-filter-label">Регион</label>
+                            <select class="marketplace-filter-select" name="region" id="marketplace-region-select">
+                                <option value="">Все регионы</option>
+                                {% for region in regions %}
+                                <option value="{{ region.slug }}"
+                                        {% if selected_region == region.slug %}selected{% endif %}>
+                                    {{ region.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="marketplace-filter-group">
+                            <label class="marketplace-filter-label">Категория товара</label>
+                            <select class="marketplace-filter-select" name="category" id="marketplace-category-select">
+                                <option value="">Все категории</option>
+                                {% for category in categories %}
+                                <option value="{{ category.slug }}"
+                                        {% if selected_category == category.slug %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="marketplace-filter-group">
+                            <label class="marketplace-filter-label">Тип продукта</label>
+                            <select class="marketplace-filter-select" name="product_type" id="marketplace-product-type-select">
+                                <option value="">Все типы</option>
+                                {% for type in product_types %}
+                                <option value="{{ type.value }}"
+                                        {% if selected_product_type == type.value %}selected{% endif %}>
+                                    {{ type.label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Строка поиска -->
+                    <div class="marketplace-search-row">
+                        <div class="marketplace-search-group">
+                            <input type="text"
+                                   name="search"
+                                   class="marketplace-search-input"
+                                   placeholder="Поиск по названию товара или продавца..."
+                                   value="{{ search_query }}">
+                            <button type="submit" class="marketplace-search-button">
+                                <i class="fas fa-search"></i> Найти
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Информация о результатах -->
+            <div class="marketplace-results-info">
+                <p>Найдено товаров: <strong>{{ products.count }}</strong></p>
+                {% if selected_region or selected_category or selected_product_type or search_query %}
+                <a href="{% url 'marketplace' %}" class="marketplace-clear-filters">
+                    <i class="fas fa-times"></i> Сбросить фильтры
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- Сетка товаров -->
+            <div class="marketplace-products-grid" id="marketplace-products-grid">
+                {% if products %}
+                    {% for product in products %}
+                    <div class="marketplace-product-card">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}" class="marketplace-product-image">
+                        {% else %}
+                        <img src="{% static 'images/default-product.jpg' %}" alt="{{ product.title }}" class="marketplace-product-image">
+                        {% endif %}
+
+                        <div class="marketplace-product-content">
+                            <div class="marketplace-product-category">
+                                <i class="{{ product.category.icon }}"></i> {{ product.category.name }}
+                            </div>
+
+                            <h3 class="marketplace-product-title">{{ product.title }}</h3>
+                            <p class="marketplace-product-description">{{ product.description }}</p>
+
+                            <div class="marketplace-product-details">
+                                {% if product.weight %}
+                                <div class="marketplace-product-detail">
+                                    <i class="fas fa-weight-hanging"></i> {{ product.weight }} {{ product.weight_unit }}
+                                </div>
+                                {% endif %}
+
+                                {% if product.variety %}
+                                <div class="marketplace-product-detail">
+                                    <i class="fas fa-seedling"></i> {{ product.variety }}
+                                </div>
+                                {% endif %}
+
+                                {% if product.season %}
+                                <div class="marketplace-product-detail">
+                                    <i class="fas fa-calendar-alt"></i> {{ product.season }}
+                                </div>
+                                {% endif %}
+
+                                {% if product.is_organic %}
+                                <div class="marketplace-product-detail">
+                                    <i class="fas fa-leaf"></i> Органический
+                                </div>
+                                {% endif %}
+
+                                {% if product.is_certified %}
+                                <div class="marketplace-product-detail">
+                                    <i class="fas fa-award"></i> Сертифицированный
+                                </div>
+                                {% endif %}
+
+                                <!-- Дополнительные характеристики -->
+                                {% for char in product.characteristics.all %}
+                                <div class="marketplace-product-detail">
+                                    <i class="{{ char.icon }}"></i> {{ char.value }}
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="marketplace-seller-info">
+                                {% if product.seller.avatar %}
+                                <img src="{{ product.seller.avatar.url }}" alt="{{ product.seller.company_name }}" class="marketplace-seller-avatar">
+                                {% else %}
+                                <div class="marketplace-seller-avatar placeholder">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                {% endif %}
+
+                                <div class="marketplace-seller-details">
+                                    <div class="marketplace-seller-name">{{ product.seller.company_name }}</div>
+                                    <div class="marketplace-seller-location">
+                                        <i class="fas fa-map-marker-alt"></i> {{ product.seller.region.name }}
+                                    </div>
+                                    <div class="marketplace-seller-phone">
+                                        <i class="fas fa-phone"></i> {{ product.seller.phone }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="marketplace-product-price">{{ product.price }} сомони</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Состояние когда товаров нет -->
+                    <div class="marketplace-empty-state">
+                        <div class="marketplace-empty-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="marketplace-empty-title">Товары не найдены</h3>
+                        <p class="marketplace-empty-description">
+                            Попробуйте изменить параметры поиска или сбросить фильтры
+                        </p>
+                        <a href="{% url 'marketplace' %}" class="marketplace-clear-filters-btn">
+                            Сбросить фильтры
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/marketplace.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,305 @@
+/* Стили для раздела услуг */
+.services-section {
+    max-width: 100%;
+}
+
+.services-space-y-6 > * + * {
+    margin-top: 1.5rem;
+}
+
+.services-mb-8 {
+    margin-bottom: 2rem;
+}
+
+.services-mb-4 {
+    margin-bottom: 1rem;
+}
+
+.services-mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.services-text-4xl {
+    font-size: 2.25rem;
+}
+
+.services-text-xl {
+    font-size: 1.25rem;
+}
+
+.services-text-lg {
+    font-size: 1.125rem;
+}
+
+.services-font-bold {
+    font-weight: 700;
+}
+
+.services-font-semibold {
+    font-weight: 600;
+}
+
+.services-text-foreground {
+    color: var(--foreground);
+}
+
+.services-text-muted-foreground {
+    color: var(--muted-foreground);
+}
+
+.services-text-primary {
+    color: var(--primary);
+}
+
+.services-text-white {
+    color: white;
+}
+
+.services-relative {
+    position: relative;
+}
+
+.services-absolute {
+    position: absolute;
+}
+
+.services-inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.services-rounded-3xl {
+    border-radius: 1.5rem;
+}
+
+.services-overflow-hidden {
+    overflow: hidden;
+}
+
+.services-h-64 {
+    height: 16rem;
+}
+
+.services-w-full {
+    width: 100%;
+}
+
+.services-h-full {
+    height: 100%;
+}
+
+.services-object-cover {
+    object-fit: cover;
+}
+
+.services-gradient-overlay {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(16, 185, 129, 0.6));
+}
+
+.services-flex {
+    display: flex;
+}
+
+.services-items-center {
+    align-items: center;
+}
+
+.services-items-start {
+    align-items: flex-start;
+}
+
+.services-justify-center {
+    justify-content: center;
+}
+
+.services-justify-between {
+    justify-content: space-between;
+}
+
+.services-text-center {
+    text-align: center;
+}
+
+.services-grid {
+    display: grid;
+}
+
+.services-grid-cols-1 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .services-md-grid-cols-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.services-gap-6 {
+    gap: 1.5rem;
+}
+
+.services-gap-4 {
+    gap: 1rem;
+}
+
+.services-gap-2 {
+    gap: 0.5rem;
+}
+
+.services-p-6 {
+    padding: 1.5rem;
+}
+
+.services-p-3 {
+    padding: 0.75rem;
+}
+
+.services-flex-1 {
+    flex: 1;
+}
+
+/* Карточки услуг */
+.services-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border: 1px solid #f1f5f9;
+}
+
+.services-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.services-rounded-xl {
+    border-radius: 0.75rem;
+}
+
+.services-bg-primary-10 {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.services-h-8 {
+    height: 2rem;
+}
+
+.services-w-8 {
+    width: 2rem;
+}
+
+.services-h-4 {
+    height: 1rem;
+}
+
+.services-w-4 {
+    width: 1rem;
+}
+
+/* Баннер услуг */
+.services-banner {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    height: 16rem;
+    margin-bottom: 2rem;
+}
+
+.services-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.services-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(16, 185, 129, 0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* Кнопки услуг */
+.services-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: white;
+    gap: 0.5rem;
+}
+
+.services-btn:hover {
+    background-color: var(--primary-glow);
+    transform: translateY(-1px);
+}
+
+.services-btn-lg {
+    padding: 0.875rem 1.75rem;
+}
+
+/* Анимации для услуг */
+@keyframes servicesFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.services-card {
+    animation: servicesFadeInUp 0.5s ease-out;
+}
+
+.services-card:nth-child(1) { animation-delay: 0.1s; }
+.services-card:nth-child(2) { animation-delay: 0.2s; }
+.services-card:nth-child(3) { animation-delay: 0.3s; }
+.services-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Уведомление для услуг */
+.services-toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--accent);
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.services-toast.show {
+    transform: translateX(0);
+}
+
+.services-toast-title {
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 0.25rem;
+}
+
+.services-toast-description {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Услуги - Киоск{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Секция услуг -->
+        <section class="services-section">
+            <div class="services-space-y-6">
+                <!-- Баннер с изображением -->
+                <div class="services-banner">
+                    <img
+                        src="https://images.unsplash.com/photo-1586771107445-d3ca888129fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
+                        alt="Сельскохозяйственные услуги"
+                    />
+                    <div class="services-banner-overlay">
+                        <div class="services-text-center services-text-white">
+                            <h1 class="services-text-4xl services-font-bold services-mb-2">Сельскохозяйственные услуги</h1>
+                            <p class="services-text-xl">Профессиональная поддержка для ваших фермерских нужд</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Сетка услуг -->
+                <div class="services-grid services-grid-cols-1 services-md-grid-cols-2 services-gap-6">
+                    <!-- Услуга 1: Аренда оборудования -->
+                    <div class="services-card services-p-6">
+                        <div class="services-flex services-items-start services-gap-4">
+                            <div class="services-p-3 services-rounded-xl services-bg-primary-10">
+                                <i class="fas fa-tractor services-h-8 services-w-8 services-text-primary"></i>
+                            </div>
+                            <div class="services-flex-1">
+                                <h3 class="services-text-xl services-font-semibold services-text-foreground services-mb-2">Аренда оборудования</h3>
+                                <p class="services-text-muted-foreground services-mb-4">Аренда современного фермерского оборудования по часам или дням</p>
+                                <div class="services-flex services-items-center services-justify-between">
+                                    <span class="services-text-lg services-font-bold services-text-primary">От 200 сомони/день</span>
+                                    <button class="services-btn services-request-btn">
+                                        <i class="fas fa-phone services-h-4 services-w-4"></i>
+                                        Заказать услугу
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Услуга 2: Системы орошения -->
+                    <div class="services-card services-p-6">
+                        <div class="services-flex services-items-start services-gap-4">
+                            <div class="services-p-3 services-rounded-xl services-bg-primary-10">
+                                <i class="fas fa-tint services-h-8 services-w-8 services-text-primary"></i>
+                            </div>
+                            <div class="services-flex-1">
+                                <h3 class="services-text-xl services-font-semibold services-text-foreground services-mb-2">Системы орошения</h3>
+                                <p class="services-text-muted-foreground services-mb-4">Установка и обслуживание ирригационных систем</p>
+                                <div class="services-flex services-items-center services-justify-between">
+                                    <span class="services-text-lg services-font-bold services-text-primary">От 500 сомони</span>
+                                    <button class="services-btn services-request-btn">
+                                        <i class="fas fa-phone services-h-4 services-w-4"></i>
+                                        Заказать услугу
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Услуга 3: Агрономический консалтинг -->
+                    <div class="services-card services-p-6">
+                        <div class="services-flex services-items-start services-gap-4">
+                            <div class="services-p-3 services-rounded-xl services-bg-primary-10">
+                                <i class="fas fa-seedling services-h-8 services-w-8 services-text-primary"></i>
+                            </div>
+                            <div class="services-flex-1">
+                                <h3 class="services-text-xl services-font-semibold services-text-foreground services-mb-2">Агрономический консалтинг</h3>
+                                <p class="services-text-muted-foreground services-mb-4">Экспертные консультации по управлению урожаем и здоровью почвы</p>
+                                <div class="services-flex services-items-center services-justify-between">
+                                    <span class="services-text-lg services-font-bold services-text-primary">500 сомони/час</span>
+                                    <button class="services-btn services-request-btn">
+                                        <i class="fas fa-phone services-h-4 services-w-4"></i>
+                                        Заказать услугу
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Услуга 4: Техническое обслуживание -->
+                    <div class="services-card services-p-6">
+                        <div class="services-flex services-items-start services-gap-4">
+                            <div class="services-p-3 services-rounded-xl services-bg-primary-10">
+                                <i class="fas fa-tools services-h-8 services-w-8 services-text-primary"></i>
+                            </div>
+                            <div class="services-flex-1">
+                                <h3 class="services-text-xl services-font-semibold services-text-foreground services-mb-2">Техническое обслуживание</h3>
+                                <p class="services-text-muted-foreground services-mb-4">Ремонт оборудования и профилактическое обслуживание</p>
+                                <div class="services-flex services-items-center services-justify-between">
+                                    <span class="services-text-lg services-font-bold services-text-primary">Уточняйте стоимость</span>
+                                    <button class="services-btn services-request-btn">
+                                        <i class="fas fa-phone services-h-4 services-w-4"></i>
+                                        Заказать услугу
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Уведомление для услуг -->
+<!--<div id="services-toast" class="services-toast">
+    <div class="services-toast-title">Запрос отправлен!</div>
+    <div class="services-toast-description">Мы свяжемся с вами в ближайшее время для уточнения деталей.</div>
+</div>-->
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/services.js' %}"></script>
+{% endblock %}

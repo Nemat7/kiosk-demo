@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Погода - Киоск{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <!-- Баннер с предупреждением (HTMX) -->
+    <div id="alert-banner"
+         hx-get="{% url 'alerts_partial' %}"
+         hx-trigger="load, every 30s"
+         hx-swap="innerHTML">
+        <!-- Загрузочное состояние -->
+        <div class="alert-banner info">
+            <div class="alert-content">
+                <p>Загрузка предупреждений...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Секция погоды -->
+        <section class="weather-section active">
+            <h2 class="weather-section-title">Прогноз погоды</h2>
+
+            <!-- Хлебные крошки -->
+            <div class="weather-breadcrumbs" id="weather-breadcrumbs">
+                <div class="weather-breadcrumb active" data-map-id="tajikistan">Таджикистан</div>
+            </div>
+
+            <div class="weather-grid">
+                <!-- Левая панель - поиск и текущая погода -->
+                <div class="weather-sidebar">
+                    <div class="weather-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="weather-search-input" placeholder="Найти регион, город или район...">
+                        <div class="weather-search-results" id="weather-search-results"></div>
+                    </div>
+
+                    <div class="weather-location-info">
+                        <h3 id="weather-location-title">Выберите область</h3>
+                        <div class="weather-current-weather">
+                            <div class="weather-icon">
+                                <i class="fas fa-map-marker-alt" id="weather-icon"></i>
+                            </div>
+                            <div class="weather-temperature" id="weather-temperature">--°C</div>
+                            <div class="weather-description" id="weather-description">Выберите область для просмотра погоды</div>
+
+                            <!--<div class="weather-details">
+                                <div class="weather-detail">
+                                    <div class="weather-detail-value" id="weather-humidity">&#45;&#45;%</div>
+                                    <div class="weather-detail-label">Влажность</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="weather-detail-value" id="weather-wind">&#45;&#45; м/с</div>
+                                    <div class="weather-detail-label">Ветер</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="weather-detail-value" id="weather-pressure">&#45;&#45; гПа</div>
+                                    <div class="weather-detail-label">Давление</div>
+                                </div>
+                                <div class="weather-detail">
+                                    <div class="weather-detail-value" id="weather-precipitation">&#45;&#45;%</div>
+                                    <div class="weather-detail-label">Вероятность осадков</div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Центральная карта -->
+                <div class="weather-map-container">
+                    <div class="weather-map-wrapper">
+                        <img src="{% static 'images/maps/country/TajMainMap.avif' %}"
+                             alt="Карта Таджикистана"
+                             class="weather-map-image"
+                             id="weather-current-map"
+                             style="cursor: pointer;">
+                    </div>
+
+                    <div class="weather-map-navigation">
+                        <button class="weather-btn-outline" id="weather-back-btn" disabled>
+                            <i class="fas fa-arrow-left"></i> Назад
+                        </button>
+                        <div class="weather-zoom-controls">
+                            <button class="weather-btn-icon" id="weather-zoom-out">-</button>
+                            <button class="weather-btn-icon" id="weather-zoom-in">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая панель - прогноз на 5 дней -->
+                <div class="weather-forecast-sidebar">
+                    <h4 class="weather-forecast-header">Прогноз на 5 дней</h4>
+                    <div class="weather-forecast-list" id="weather-forecast-list">
+                        <!-- Прогноз будет добавляться через JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Уведомления будут добавляться динамически -->
+
+<!--<script src="{% static 'js/maps-data.js' %}"></script>-->
+<!--<script src="{% static 'js/weather-map.js' %}"></script>-->
+{% endblock %}
+

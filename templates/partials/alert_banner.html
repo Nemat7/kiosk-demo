@@ -1,0 +1,13 @@
+{% for alert in alerts %}
+<div class="alert-banner {{ alert.alert_type }}">
+    <div class="alert-content">
+        <h3>{{ alert.title }}</h3>
+        <p>{{ alert.message }}</p>
+        {% if alert.end_date %}
+<!--        <small>Действует до: {{ alert.end_date|date:"d.m.Y H:i" }}</small>-->
+        {% endif %}
+    </div>
+</div>
+{% empty %}
+<!-- Пустой state - ничего не показываем -->
+{% endfor %}

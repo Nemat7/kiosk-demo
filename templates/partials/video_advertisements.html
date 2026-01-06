@@ -1,0 +1,254 @@
+<div class="advertisement">
+    <div class="ad-content">
+        <div class="video-carousel">
+            {% for video in videos %}
+            <div class="video-slide {% if forloop.first %}active{% endif %}">
+                <div class="video-container">
+                    <video controls
+                           src="{{ video.get_video_source }}"
+                           style="width: 100%; height: auto; border-radius: 8px;">
+                        Ваш браузер не поддерживает видео тег.
+                    </video>
+                </div>
+                <h4 class="ad-title">{{ video.title }}</h4>
+                <p class="ad-description">{{ video.description }}</p>
+            </div>
+            {% empty %}
+            <div class="no-videos">
+                <p>Нет активных видео объявлений</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if videos|length > 1 %}
+        <div class="video-controls">
+            <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
+            <div class="video-indicators">
+                {% for video in videos %}
+                <span class="indicator {% if forloop.first %}active{% endif %}" onclick="goToVideo({{ forloop.counter0 }})"></span>
+                {% endfor %}
+            </div>
+            <button class="video-nav next" onclick="changeVideo(1)">›</button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.video-slide {
+    display: none;
+}
+.video-slide.active {
+    display: block;
+}
+.video-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+.video-nav {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+}
+.video-nav:hover {
+    background: #0056b3;
+}
+.video-indicators {
+    display: flex;
+    gap: 5px;
+}
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.indicator.active {
+    background: #007bff;
+}
+.indicator:hover {
+    background: #0056b3;
+}
+.no-videos {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+.video-container {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+</style>
+
+
+<script>
+let currentVideoIndex = 0;
+let videoSlides = document.querySelectorAll('.video-slide');
+let totalVideos = videoSlides.length;
+
+function showVideo(index) {
+    // Останавливаем все видео
+    document.querySelectorAll('video').forEach(video => {
+        video.pause();
+        video.currentTime = 0;
+    });
+
+    // Скрываем все слайды
+    videoSlides.forEach(slide => slide.classList.remove('active'));
+
+    // Показываем выбранный слайд
+    if (videoSlides[index]) {
+        videoSlides[index].classList.add('active');
+        currentVideoIndex = index;
+
+        // Обновляем индикаторы
+        document.querySelectorAll('.indicator').forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
+        });
+    }
+}
+
+function changeVideo(direction) {
+    let newIndex = currentVideoIndex + direction;
+    if (newIndex >= totalVideos) newIndex = 0;
+    if (newIndex < 0) newIndex = totalVideos - 1;
+
+    // Останавливаем текущее видео перед переключением
+    const currentVideo = videoSlides[currentVideoIndex].querySelector('video');
+    if (currentVideo) {
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+    }
+
+    showVideo(newIndex);
+
+    // Запускаем новое видео
+    const newVideo = videoSlides[newIndex].querySelector('video');
+    if (newVideo) {
+        // Убедимся, что источник установлен
+        const videoSrc = newVideo.getAttribute('data-video-src');
+        if (videoSrc && !newVideo.src) {
+            newVideo.src = videoSrc;
+        }
+        newVideo.play().catch(error => {
+            console.log('Автовоспроизведение заблокировано:', error);
+        });
+    }
+}
+
+function goToVideo(index) {
+    // Останавливаем текущее видео
+    const currentVideo = videoSlides[currentVideoIndex].querySelector('video');
+    if (currentVideo) {
+        currentVideo.pause();
+        currentVideo.currentTime = 0;
+    }
+
+    showVideo(index);
+
+    // Запускаем новое видео
+    const newVideo = videoSlides[index].querySelector('video');
+    if (newVideo) {
+        const videoSrc = newVideo.getAttribute('data-video-src');
+        if (videoSrc && !newVideo.src) {
+            newVideo.src = videoSrc;
+        }
+        newVideo.play().catch(error => {
+            console.log('Автовоспроизведение заблокировано:', error);
+        });
+    }
+}
+
+function playNextVideo(currentVideo) {
+    if (totalVideos <= 1) return;
+
+    let nextIndex = currentVideoIndex + 1;
+    if (nextIndex >= totalVideos) nextIndex = 0;
+
+    changeVideo(1); // Переключаем на следующее видео
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    videoSlides = document.querySelectorAll('.video-slide');
+    totalVideos = videoSlides.length;
+
+    if (totalVideos > 0) {
+        showVideo(0);
+
+        // Автоматически запускаем первое видео
+        const firstVideo = videoSlides[0].querySelector('video');
+        if (firstVideo) {
+            const videoSrc = firstVideo.getAttribute('data-video-src');
+            if (videoSrc && !firstVideo.src) {
+                firstVideo.src = videoSrc;
+            }
+
+            // Пытаемся запустить автовоспроизведение
+            firstVideo.play().catch(error => {
+                console.log('Автовоспроизведение заблокировано браузером:', error);
+                // Можно показать кнопку для ручного запуска
+                showPlayButton();
+            });
+        }
+    }
+});
+
+// Показываем кнопку воспроизведения если автовоспроизведение заблокировано
+function showPlayButton() {
+    const firstSlide = document.querySelector('.video-slide.active');
+    if (firstSlide) {
+        const playButton = document.createElement('button');
+        playButton.className = 'ad-button';
+        playButton.textContent = 'Воспроизвести видео';
+        playButton.style.marginTop = '10px';
+        playButton.onclick = function() {
+            const video = firstSlide.querySelector('video');
+            if (video) {
+                video.play();
+                playButton.remove();
+            }
+        };
+        firstSlide.appendChild(playButton);
+    }
+}
+
+// Обработчик для HTMX
+document.addEventListener('htmx:afterSwap', function(event) {
+    if (event.target.id === 'video-advertisements') {
+        // Переинициализируем переменные
+        videoSlides = document.querySelectorAll('.video-slide');
+        totalVideos = videoSlides.length;
+        currentVideoIndex = 0;
+
+        if (totalVideos > 0) {
+            showVideo(0);
+
+            // Автозапуск первого видео
+            const firstVideo = videoSlides[0].querySelector('video');
+            if (firstVideo) {
+                const videoSrc = firstVideo.getAttribute('data-video-src');
+                if (videoSrc && !firstVideo.src) {
+                    firstVideo.src = videoSrc;
+                }
+                firstVideo.play().catch(error => {
+                    console.log('Автовоспроизведение заблокировано:', error);
+                    showPlayButton();
+                });
+            }
+        }
+    }
+});
+</script>

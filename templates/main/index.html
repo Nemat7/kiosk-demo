@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная - Киоск{% endblock %}
+
+{% block extra_head %}
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+   <!-- Баннер с предупреждением (HTMX) -->
+    <div id="alert-banner"
+         hx-get="{% url 'alerts_partial' %}"
+         hx-trigger="load, every 30s"
+         hx-swap="innerHTML">
+        <!-- Загрузочное состояние -->
+        <div class="alert-banner info">
+            <div class="alert-content">
+                <p>Загрузка предупреждений...</p>
+            </div>
+        </div>
+    </div>
+    <!-- Баннер с предупреждением -->
+    <!--<div class="alert-banner warning">
+        <div class="alert-content">
+            <h3>Погодное предупреждение</h3>
+            <p>Ожидаются сильные осадки в Горно-Бадахшанской автономной области в ближайшие 24 часа.</p>
+        </div>
+    </div>-->
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Домашняя страница -->
+        <section class="home-section">
+            <h1 class="section-title">Добро пожаловать в Киоск</h1>
+            
+            <div class="cards-grid">
+                <div class="cards-container">
+                    <!-- Карточка погоды -->
+                    <a href="{% url 'weather' %}" class="text-decoration-none">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                 alt="Прогноз погоды" class="card-image">
+                            <div class="card-overlay weather">
+                                <div class="card-icon">
+                                    <i class="fas fa-cloud"></i>
+                                </div>
+                                <h3 class="card-title">Прогноз погоды</h3>
+                                <p class="card-description">
+                                    Проверьте региональные погодные условия и планируйте свою деятельность
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Карточка маркетплейса -->
+                    <a href="{% url 'marketplace' %}" class="text-decoration-none">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1625246333197-58c78d997c29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="" class="card-image">
+                            <div class="card-overlay marketplace">
+                                <div class="card-icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <h3 class="card-title">Маркетплейс</h3>
+                                <p class="card-description">Покупайте и продавайте сельскохозяйственную продукцию напрямую с фермерами</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Карточка услуг -->
+                    <a href="{% url 'services' %}" class="text-decoration-none">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="" class="card-image">
+                            <div class="card-overlay services">
+                                <div class="card-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <h3 class="card-title">Услуги</h3>
+                                <p class="card-description">Сельскохозяйственные услуги, аренда оборудования и экспертная поддержка</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Карточка контактов -->
+                    <a href="{% url 'contact' %}" class="text-decoration-none">
+                        <div class="card">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Свяжитесь с нами" class="card-image">
+                            <div class="card-overlay contact">
+                                <div class="card-icon">
+                                    <i class="fas fa-comment-alt"></i>
+                                </div>
+                                <h3 class="card-title">Свяжитесь с нами</h3>
+                                <p class="card-description">Свяжитесь с нами для получения поддержки и помощи</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="sidebar">
+                    <h3 class="sidebar-title">Видео объявления</h3>
+                    <div id="video-advertisements"
+                         hx-get="{% url 'videos_partial' %}"
+                         hx-trigger="load, every 60s"
+                         hx-swap="innerHTML">
+                        <!-- Загрузочное состояние -->
+                        <div class="advertisement">
+                            <div class="ad-content">
+                                <p>Загрузка видео...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               <!-- <div class="sidebar">
+                    <h3 class="sidebar-title">Видео объявления</h3>
+                    <div class="advertisement">
+                        <div class="ad-content">
+                            <div class="video-container">
+                                <video controls poster="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80">
+                                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                                    Ваш браузер не поддерживает видео тег.
+                                </video>
+                            </div>
+                            <h4 class="ad-title">Новые возможности</h4>
+                            <p class="ad-description">Ознакомьтесь с последними обновлениями нашей платформы</p>
+                            <button class="ad-button">Смотреть видео</button>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,185 @@
+<!--
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Маркетплейс - Киоск{% endblock %}
+
+&lt;!&ndash;{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketplace.css' %}">
+{% endblock %}&ndash;&gt;
+
+{% block content %}
+<div class="container">
+    &lt;!&ndash; Основной контент &ndash;&gt;
+    <main class="main-content">
+        &lt;!&ndash; Секция маркетплейса &ndash;&gt;
+        <section class="marketplace-section">
+            <h2 class="marketplace-section-title">Агропромышленный Маркетплейс</h2>
+
+            &lt;!&ndash; Фильтры &ndash;&gt;
+            <div class="marketplace-filters-container">
+                <h3 class="marketplace-filters-title">
+                    <i class="fas fa-filter"></i> Фильтры поиска
+                </h3>
+                <div class="marketplace-filters-grid">
+                    <div class="marketplace-filter-group">
+                        <label class="marketplace-filter-label">Регион</label>
+                        <select class="marketplace-filter-select" id="marketplace-region-select">
+                            <option value="">Все регионы</option>
+                            <option value="central">Согд</option>
+                            <option value="southern">Хатлон</option>
+                            <option value="volga">РРП</option>
+                            <option value="ural">ГБАО</option>
+                        </select>
+                    </div>
+
+                    <div class="marketplace-filter-group">
+                        <label class="marketplace-filter-label">Категория товара</label>
+                        <select class="marketplace-filter-select" id="marketplace-category-select">
+                            <option value="">Все категории</option>
+                            <option value="seeds">Семена</option>
+                            <option value="fertilizers">Удобрения</option>
+                            <option value="equipment">Оборудование</option>
+                            <option value="crops">Урожай</option>
+                            <option value="livestock">Животноводство</option>
+                        </select>
+                    </div>
+
+                    <div class="marketplace-filter-group">
+                        <label class="marketplace-filter-label">Тип продукта</label>
+                        <select class="marketplace-filter-select" id="marketplace-product-type-select">
+                            <option value="">Все типы</option>
+                            <option value="potato">Картофель</option>
+                            <option value="wheat">Пшеница</option>
+                            <option value="corn">Кукуруза</option>
+                            <option value="vegetables">Овощи</option>
+                            <option value="fruits">Фрукты</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="marketplace-search-button" id="marketplace-search-button">
+                    <i class="fas fa-search"></i> Найти товары
+                </button>
+            </div>
+
+            &lt;!&ndash; Сетка товаров &ndash;&gt;
+            <div class="marketplace-products-grid" id="marketplace-products-grid">
+                &lt;!&ndash; Карточка товара 1 &ndash;&gt;
+                <div class="marketplace-product-card">
+                    <img src="{% static 'images/red-skarlet-1.webp' %}" alt="Семена картофеля" class="marketplace-product-image">
+                    <div class="marketplace-product-content">
+                        <div class="marketplace-product-category">Семена</div>
+                        <h3 class="marketplace-product-title">Семена картофеля Ред Скарлет</h3>
+                        <p class="marketplace-product-description">Высококачественные семена картофеля голландской селекции. Урожайность до 600 ц/га.</p>
+
+                        <div class="marketplace-product-details">
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-weight-hanging"></i> 50 кг
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-seedling"></i> Элитный сорт
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-calendar-alt"></i> Сезон 2024
+                            </div>
+                        </div>
+
+                        <div class="marketplace-seller-info">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Фермер" class="marketplace-seller-avatar">
+                            <div class="marketplace-seller-details">
+                                <div class="marketplace-seller-name">Агрохолдинг "Рашт"</div>
+                                <div class="marketplace-seller-location">
+                                    <i class="fas fa-map-marker-alt"></i> Рашт
+                                </div>
+                                <div class="marketplace-seller-phone">
+                                    <i class="fas fa-phone"></i> +992931111111
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="marketplace-product-price">12 500 сомони</div>
+                    </div>
+                </div>
+
+                &lt;!&ndash; Карточка товара 2 &ndash;&gt;
+                <div class="marketplace-product-card">
+                    <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Органические удобрения" class="marketplace-product-image">
+                    <div class="marketplace-product-content">
+                        <div class="marketplace-product-category">Удобрения</div>
+                        <h3 class="marketplace-product-title">Органическое удобрение БиоГумус</h3>
+                        <p class="marketplace-product-description">Натуральное органическое удобрение для повышения плодородия почвы. Подходит для всех культур.</p>
+
+                        <div class="marketplace-product-details">
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-weight-hanging"></i> 25 кг
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-leaf"></i> Органическое
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-award"></i> Сертифицировано
+                            </div>
+                        </div>
+
+                        <div class="marketplace-seller-info">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Фермер" class="marketplace-seller-avatar">
+                            <div class="marketplace-seller-details">
+                                <div class="marketplace-seller-name">Эко-Ферма "Лахш"</div>
+                                <div class="marketplace-seller-location">
+                                    <i class="fas fa-map-marker-alt"></i> Лахщ
+                                </div>
+                                <div class="marketplace-seller-phone">
+                                    <i class="fas fa-phone"></i> +992931111111
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="marketplace-product-price">3 200 сомони</div>
+                    </div>
+                </div>
+
+                &lt;!&ndash; Карточка товара 3 &ndash;&gt;
+                <div class="marketplace-product-card">
+                    <img src="{% static 'images/tracktor.webp' %}" alt="Мини-трактор" class="marketplace-product-image">
+                    <div class="marketplace-product-content">
+                        <div class="marketplace-product-category">Оборудование</div>
+                        <h3 class="marketplace-product-title">Мини-трактор FarmerPro 25 л.с.</h3>
+                        <p class="marketplace-product-description">Компактный трактор для небольших хозяйств. Идеален для обработки почвы, покоса и транспортировки.</p>
+
+                        <div class="marketplace-product-details">
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-horse-head"></i> 25 л.с.
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-cogs"></i> Дизельный
+                            </div>
+                            <div class="marketplace-product-detail">
+                                <i class="fas fa-tools"></i> В комплекте
+                            </div>
+                        </div>
+
+                        <div class="marketplace-seller-info">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Фермер" class="marketplace-seller-avatar">
+                            <div class="marketplace-seller-details">
+                                <div class="marketplace-seller-name">АгроТехника</div>
+                                <div class="marketplace-seller-location">
+                                    <i class="fas fa-map-marker-alt"></i> Душанбе
+                                </div>
+                                <div class="marketplace-seller-phone">
+                                    <i class="fas fa-phone"></i> +992931111111
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="marketplace-product-price">125 000 сомони</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+{% endblock %}
+
+&lt;!&ndash;{% block extra_js %}&ndash;&gt;
+&lt;!&ndash;<script src="{% static 'js/marketplace.js' %}"></script>&ndash;&gt;
+&lt;!&ndash;{% endblock %}&ndash;&gt;-->

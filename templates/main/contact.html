@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты - Киоск{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Основной контент -->
+    <main class="main-content">
+        <!-- Секция контактов -->
+        <section class="contact-section">
+            <div class="space-y-6">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-foreground mb-2">Свяжитесь с нами</h1>
+                    <p class="text-muted-foreground">Мы здесь, чтобы помочь со всеми вашими сельскохозяйственными потребностями</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="contact-card p-8">
+                        <h3 class="text-2xl font-semibold text-foreground mb-6">Отправьте нам сообщение</h3>
+                        <form id="contact-form" class="space-y-5" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name" class="label text-base">Полное имя *</label>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    class="input mt-2 h-12 text-base"
+                                    placeholder="Введите ваше имя"
+                                    required
+                                />
+                                <div class="error-message" id="name-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="label text-base">Номер телефона</label>
+                                <input
+                                    id="phone"
+                                    name="phone"
+                                    type="tel"
+                                    class="input mt-2 h-12 text-base"
+                                    placeholder="+992 (931-111-111)"
+                                />
+                                <div class="error-message" id="phone-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="label text-base">Сообщение *</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    class="textarea mt-2 min-h-32 text-base"
+                                    placeholder="Чем мы можем вам помочь?"
+                                    required
+                                ></textarea>
+                                <div class="error-message" id="message-error"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-full gap-2" id="submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="contact-card p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="p-3 rounded-xl bg-primary-10">
+                                    <i class="fas fa-phone h-6 w-6 text-primary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-foreground mb-1">Телефон</h4>
+                                    <p class="text-muted-foreground">+992 44 625 2000/2001/2002/2003</p>
+                                    <p class="text-sm text-muted-foreground mt-1">Пн-Сб, 8:00-18:00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-card p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="p-3 rounded-xl bg-accent-10">
+                                    <i class="fas fa-envelope h-6 w-6 text-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-foreground mb-1">Email</h4>
+                                    <p class="text-muted-foreground">wfp.dushanbe@wfp.org</p>
+                                    <p class="text-sm text-muted-foreground mt-1">Отвечаем в течение 24 часов</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-card p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="p-3 rounded-xl bg-secondary-10">
+                                    <i class="fas fa-map-marker-alt h-6 w-6 text-secondary"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-foreground mb-1">Адрес</h4>
+                                    <p class="text-muted-foreground">Агропромышленный центр</p>
+                                    <p class="text-muted-foreground">ул. Лохути 5, Проезд 1, г. Душанбе 734013</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-card p-6 bg-gradient-earth text-white">
+                            <h4 class="font-semibold text-lg mb-2">Часы работы</h4>
+                            <div class="space-y-1 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Понедельник - Пятница</span>
+                                    <span class="font-medium">8:00 - 18:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Суббота</span>
+                                    <span class="font-medium">9:00 - 16:00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Воскресенье</span>
+                                    <span class="font-medium">Выходной</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Уведомление -->
+<div id="toast" class="toast">
+    <div class="toast-title" id="toast-title">Сообщение отправлено!</div>
+    <div class="toast-description" id="toast-description">Мы свяжемся с вами в ближайшее время.</div>
+</div>
+{% endblock %}
+
+<!--
+{% block extra_js %}
+<script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}-->
