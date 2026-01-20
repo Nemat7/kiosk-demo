@@ -84,6 +84,9 @@ class Product(models.Model):
     # Дата создания
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True, verbose_name="Активный")
+    # для каждого товара будут ставиться временные ограничения
+    start_date = models.DateTimeField(default=timezone.now, verbose_name='Дата начала')
+    end_date = models.DateTimeField(blank=True, null=True, verbose_name='Дата окончания')
 
     class Meta:
         verbose_name = "Товар"
@@ -97,6 +100,14 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.seller.company_name}"
+
+    def is_currently_active(self):
+        now = timezone.now()
+        if not self.is_active:
+            return False
+        if self.end_date and now > self.end_date:
+            return False
+        return now >= self.start_date
 
 
 class ProductCharacteristic(models.Model):

@@ -58,8 +58,17 @@ def marketplace(request):
     product_type = request.GET.get('product_type', '')
     search_query = request.GET.get('search', '')
 
+    # Начинаем с активных товаров с корректными датами
+    current_time = timezone.now()
+    products = Product.objects.filter(
+        is_active=True,
+        start_date__lte=current_time  # стартовая дата уже наступила
+    ).filter(
+        models.Q(end_date__isnull=True) | models.Q(end_date__gte=current_time)
+    )  # дата окончания либо не установлена, либо еще не наступила
+
     # Начинаем с активных товаров
-    products = Product.objects.filter(is_active=True)
+    # products = Product.objects.filter(is_active=True)
 
     # Применяем фильтры
     if region_slug:
